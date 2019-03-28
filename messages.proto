@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+
+message Blockmsg {
+  int32 protocl_version = 1;
+  int32 network_id = 2;
+  int32 total_difficulty = 3;
+  string last_block_hash = 4;
+  int32 last_block_num = 5;
+  string gen_block_hash = 6;
+}
+
+// message tx_msg {
+//   string to;
+//   string from;
+//   int32 amount;
+//   int32 value;
+//   string data;
+// }
+
+// message ping {
+//   int32 version;
+//   string from;
+//   string to;
+//   int32 expiration;
+// }
+
+// message pong {
+//   string to;
+//   string ping_hash;
+//   int32 expiration;
+// }
+
+// message findnode {
+//   string target;
+//   int32 expiration;
+// }
+
+// message neighbors {
+//   repeated int32 nodes;
+//   int32 expiration;
+
+// }
+
+// // nodes = [[ip, udp-port, tcp-port, node-id], ...]
+// // from = [sender-ip, sender-udp-port, sender-tcp-port]
+// // to = [recipient-ip, recipient-udp-port, 0]
