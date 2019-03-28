@@ -1,1 +1,1 @@
-true: package(nocrypto), package(cstruct)
+true: package(nocrypto), package(cstruct), package(lwt), package(ocaml-protoc)
