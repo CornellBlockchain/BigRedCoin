@@ -8,6 +8,8 @@ let state t = t.state
 (* [check_hash block] checks that the hash of the block is below its total difficulty. *)
 let check_hash block = failwith "unimplemented"
 
+let total_diff t = t.total_diff
+
 (* [validate t block] checks that [block] is a valid block to attach to the 
  * head of fork [t]. *)
 let validate t block = 
@@ -20,5 +22,5 @@ let validate t block =
 let apply t block store = 
   if validate t block then 
     Store.put store block;
-    Some {head = block; state = State.update state block; total_diff = t.total_diff + Block.difficulty block}
-  else None
+  Some {head = block; state = State.update state block; total_diff = t.total_diff + Block.difficulty block}
+else None
