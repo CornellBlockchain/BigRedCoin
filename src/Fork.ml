@@ -17,7 +17,7 @@ let validate t block =
   && check_hash block
   && Block.height block = Block.height (head t) + 1
   && Block.parent_hash block = Block.hash (head t)
-  
+
 (* TODO: use actual interfaces for state and block when they are written. *)
 let apply t block store = 
   if validate t block then 
