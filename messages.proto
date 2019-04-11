@@ -1,46 +1,47 @@
 syntax = "proto3";
 
-
-message Blockmsg {
-  int32 protocl_version = 1;
-  int32 network_id = 2;
-  int32 total_difficulty = 3;
-  string last_block_hash = 4;
-  int32 last_block_num = 5;
-  string gen_block_hash = 6;
+message Msg {
+  oneof msg {
+    Blockmsg blockmsg = 1;
+    Tx_msg tx_msg = 2;
+    Transactions transactions = 3;
+    Ping ping = 4;
+    Pong pong = 5;
+    Find_node find_node = 6;
+    Neighbors neighbors = 7;
+  }
 }
 
-// message tx_msg {
-//   string to;
-//   string from;
-//   int32 amount;
-//   int32 value;
-//   string data;
-// }
-
-// message ping {
-//   int32 version;
-//   string from;
-//   string to;
-//   int32 expiration;
-// }
-
-// message pong {
-//   string to;
-//   string ping_hash;
-//   int32 expiration;
-// }
-
-// message findnode {
-//   string target;
-//   int32 expiration;
-// }
-
-// message neighbors {
-//   repeated int32 nodes;
-//   int32 expiration;
-
-// }
+message Blockmsg {
+    int32 total_difficulty = 1;
+    string last_block_hash = 2;
+    int32 last_block_num = 3;
+    string gen_block_hash = 4;
+  }
+  message Tx_msg {
+    string to = 1;
+    string from = 2;
+    int32 amount = 3;
+    int32 value = 4;
+    string data = 5;
+  }
+  message Transactions {
+    repeated Tx_msg transactions = 1;
+  }
+  message Ping {
+    string from = 1;
+    string to = 2;
+  }
+  message Pong {
+    string to = 1;
+    string ping_hash = 2;
+  }
+  message Find_node {
+    string target = 1;
+  }
+  message Neighbors {
+    repeated int32 nodes = 1;
+  }
 
 // // nodes = [[ip, udp-port, tcp-port, node-id], ...]
 // // from = [sender-ip, sender-udp-port, sender-tcp-port]
