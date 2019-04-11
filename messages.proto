@@ -13,35 +13,35 @@ message Msg {
 }
 
 message Blockmsg {
-    int32 total_difficulty = 1;
-    string last_block_hash = 2;
-    int32 last_block_num = 3;
-    string gen_block_hash = 4;
-  }
-  message Tx_msg {
-    string to = 1;
-    string from = 2;
-    int32 amount = 3;
-    int32 value = 4;
-    string data = 5;
-  }
-  message Transactions {
-    repeated Tx_msg transactions = 1;
-  }
-  message Ping {
-    string from = 1;
-    string to = 2;
-  }
-  message Pong {
-    string to = 1;
-    string ping_hash = 2;
-  }
-  message Find_node {
-    string target = 1;
-  }
-  message Neighbors {
-    repeated int32 nodes = 1;
-  }
+  int32 total_difficulty = 1;
+  string last_block_hash = 2;
+  int32 last_block_num = 3;
+  string gen_block_hash = 4;
+}
+message Tx_msg {
+  string to = 1;
+  string from = 2;
+  int32 amount = 3;
+  int32 value = 4;
+  string data = 5;
+}
+message Transactions {
+  repeated Tx_msg transactions = 1;
+}
+message Ping {
+  string from = 1;
+  string to = 2;
+}
+message Pong {
+  string to = 1;
+  string ping_hash = 2;
+}
+message Find_node {
+  string target = 1;
+}
+message Neighbors {
+  repeated int32 nodes = 1;
+}
 
 // // nodes = [[ip, udp-port, tcp-port, node-id], ...]
 // // from = [sender-ip, sender-udp-port, sender-tcp-port]
