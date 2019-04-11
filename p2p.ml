@@ -14,6 +14,11 @@ let connect peer =
   let file_desc = Unix.socket PF_INET SOCK_STREAM 0 in
   Unix.connect file_desc peer.address
 
+(** Send find node message to [peer], and update [state] to contain
+    all received nodes *)
+let peer_discovery (peer:peer) = 
+  let (find_node_msg : Messages_types.msg) = failwith "TODO" in 0
+
 let _ =
   let (msg : Messages_types.blockmsg) = {
     total_difficulty = Int32.of_int 1;
