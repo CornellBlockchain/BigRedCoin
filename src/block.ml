@@ -6,11 +6,17 @@ type header = {
   height : int;
   timestamp : int;
   nonce : int;
+  state_root : string
 }
 
+type transaction = {
+  sender_address: string;
+  receiver_address: string;
+  amount_sent: int
+}
 type t = {
   header : header;
-  transactions : Transaction.t list
+  transactions : transaction list
 }
 
 let blockstore = Store.Make (Block.t)
