@@ -43,6 +43,17 @@ message Neighbors {
   repeated int32 nodes = 1;
 }
 
+message Node {
+  string ip = 1;
+}
+
+message peer_source {
+  repeated Node nodes = 1;
+}
+
+message peer_sink {
+  repeated Node nodes = 1;
+}
 // // nodes = [[ip, udp-port, tcp-port, node-id], ...]
 // // from = [sender-ip, sender-udp-port, sender-tcp-port]
 // // to = [recipient-ip, recipient-udp-port, 0]
