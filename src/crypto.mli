@@ -1,5 +1,5 @@
-type hash = Cstruct.t
+type hash = string
 
-val digest : Cstruct.t -> hash
+val digest : string -> hash
 
 
