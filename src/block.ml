@@ -1,4 +1,5 @@
 open BatBig_int
+open Sexplib
 type header = {
   parent_hash : string;
   beneficiary : string;
@@ -8,17 +9,17 @@ type header = {
   timestamp : int;
   nonce : int;
   state_root : string
-}
+} with sexp
 
 type transaction = {
   sender_address: string;
   receiver_address: string;
   amount_sent: int
-}
+} with sexp
 type t = {
   header : header;
   transactions : transaction list
-}
+} with sexp
 
 let parent_hash t = t.header.parent_hash
 
@@ -55,11 +56,11 @@ let root b = b.header.root
 
 let timestamp b = b.header.timestamp
 
-(* [hast b] is the hash of block [b] *)
-let hash = failwith "Unimplimented"
-
 (* [serialize b] is the stringification of [b] *)
-let serialize = failwith "Unimplimented"
+let serialize b = Sexp.to_string b
 
 (* [serialize str] is destringification of [str] into a block *)
-let deserialize = failwith "Unimplimented"
+let deserialize str = Sexp.of_string str
+
+(* [hast b] is the hash of block [b] *)
+let hash b = Crypto.digest(serialize(b))
