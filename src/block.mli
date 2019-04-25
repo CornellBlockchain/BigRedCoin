@@ -37,3 +37,6 @@ val root: t -> int
 
 (* [timestamp b] is the hash of the root node contained in block [b]*)
 val timestamp: t -> int
+
+(* [nonce b] is the nonce of block [b] *)
+val nonce: t -> int

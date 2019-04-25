@@ -64,3 +64,6 @@ let deserialize str = Sexp.of_string str
 
 (* [hast b] is the hash of block [b] *)
 let hash b = Crypto.digest(serialize(b))
+
+(* [nonce b] is the nonce of block [b] *)
+let nonce b = b.header.nonce
