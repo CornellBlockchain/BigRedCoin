@@ -4,46 +4,73 @@
    - need reverse mapping hash to node for insertion *)
 
 include Store
+include Crypto
 
 module type MerkleTree = sig
   type t
-  type key
   type hash
+  type address
   val empty_tree : unit -> t
-  val insert : t -> key -> t
+  val insert : t -> address -> t
   val root_hash : t -> hash
   val serialize : t -> string
 end
 
 module Make (S : Store.S) : MerkleTree = struct
 
-  type address = string
   type balance = int
   type nonce = int
 
   type t = 
-    | BranchNode of (char option) * (hash list)
+    | BranchNode of (char option) * ((hash option) list)
     | TerminalNode of (char list) * (nonce * balance)
 
-  type key = address
-
   type hash = string
+  type address = string
 
   let empty_tree () = BranchNode (None, [])
 
-  let insert tr adr = 
+  let insert_at_index lst pos (hsh : hash) = 
+    let len = List.length lst in
+    let rec index_helper l =
+      (match l with
+       | [] -> []
+       | h::t -> (if List.length t == len - pos then h::hsh::t
+                  else h::(index_helper t)))
+    in index_helper lst
+
+  let string_to_char_list s =
+    let rec strin_helper i l =
+      if i < 0 then l else
+        strin_helper (i - 1) (s.[i] :: l) in
+    strin_helper (String.length s - 1) [];;
+
+  let insert tr adr (data : (nonce * balance)) = 
     let rec insert_helper tr pos = 
       (match tr with 
-       | BranchNode (_, lst) -> faliwith "unimplemented"
-       | TerminalNode (lst, _) -> faliwith "unimplemented")
+       | BranchNode (co, lst) -> (match lst[pos] with
+           | None -> let new_hash = 
+                       (Crypto.digest (TerminalNode (string_to_char_list (String.sub adr pos ((String.length adr) - 1), data))))
+             in (BranchNode (co, (insert_at_index lst adr.[pos] new_hash)))
+           | Some h -> let new_hash = 
+                         (Crypto.digest (insert_helper (S.get tr h) (pos+1))) 
 
-  let root_hash tr = faliwith "unimplemented"
+             (* not sure how to use S.get here *)
+
+             in (BranchNode (co, (insert_at_index lst adr.[pos] new_hash))))
+       | TerminalNode (lst, _) -> (match lst with
+           | [] -> failwith "shouldn't happen"
+           | h::t -> let new_hash = 
+                       (Crypto.digest (TerminalNode t, data))
+             in let new_node = BranchNode (Some h, insert_at_index 
+                                             [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+                                             int_of_string ("0"::"x"::Character.toString(adr.[pos])::[]) new_hash)
+             in insert_helper new_node (pos+1)))
+    in insert_helper tr 0
+
+  let root_hash tr = failwith "unimplemented"
 
   let serialize tr = faliwith "unimplemented"
-
-  let get tr adr = faliwith "unimplemented"
-
-  let delete tr adr = faliwith "unimplemented"
 end
 
 
