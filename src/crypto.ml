@@ -1,4 +1,2 @@
-type hash = Cstruct.t
-
-let digest = Nocrypto.Hash.(digest `SHA256)
+let digest s = Nocrypto.Hash.(digest `SHA256) (Cstruct.of_string s)
 
